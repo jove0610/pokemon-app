@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import store from './redux/store';
+
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Team from './components/Team';
+
+import { ADD_TO_TEAM } from './redux/actions/types';
+
+if (localStorage.pokeApp) {
+  const data = JSON.parse(localStorage.getItem('pokeApp'));
+  data.forEach((url) => {
+    store.dispatch({
+      type: ADD_TO_TEAM,
+      payload: url,
+    });
+  });
 }
+
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <Navbar />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/myteam" component={Team} />
+    </Router>
+  </Provider>
+);
 
 export default App;
