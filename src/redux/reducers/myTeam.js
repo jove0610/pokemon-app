@@ -1,4 +1,4 @@
-import { ADD_TO_TEAM, REMOVE_FROM_TEAM } from '../actions/types';
+import { ADD_TO_TEAM, CLEAR_TEAM, REMOVE_FROM_TEAM } from '../actions/types';
 
 const myTeam = (state = [], action) => {
   const { type, payload } = action;
@@ -8,6 +8,8 @@ const myTeam = (state = [], action) => {
       return [...state, payload];
     case REMOVE_FROM_TEAM:
       return state.filter((member) => member.data.name !== payload);
+    case CLEAR_TEAM:
+      return [];
     default:
       return state;
   }

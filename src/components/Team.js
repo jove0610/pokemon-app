@@ -22,9 +22,16 @@ import {
   clearData as disClearData,
 } from '../redux/actions/pokeData';
 
+import { clearTeam as disClearTeam } from '../redux/actions/myTeam';
+
 import PokeDetail from './PokeDetail';
 
-const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
+const Team = ({
+  myTeam,
+  disSetData: setData,
+  disClearData: clearData,
+  disClearTeam: clearTeam,
+}) => {
   const [state, setState] = useState({
     displayPokeDetail: false,
   });
@@ -56,7 +63,7 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
 
   const onClickClearBtn = () => {
     localStorage.removeItem('pokeApp');
-    window.location.reload();
+    clearTeam();
   };
 
   return (
@@ -140,10 +147,15 @@ Team.propTypes = {
   myTeam: PropTypes.array.isRequired,
   disSetData: PropTypes.func.isRequired,
   disClearData: PropTypes.func.isRequired,
+  disClearTeam: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   myTeam: state.myTeam,
 });
 
-export default connect(mapStateToProps, { disSetData, disClearData })(Team);
+export default connect(mapStateToProps, {
+  disSetData,
+  disClearData,
+  disClearTeam,
+})(Team);

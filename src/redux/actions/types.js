@@ -5,3 +5,4 @@ export const CLEAR_POKEDATA = 'CLEAR_POKEDATA';
 
 export const ADD_TO_TEAM = 'ADD_TO_TEAM';
 export const REMOVE_FROM_TEAM = 'REMOVE_FROM_TEAM';
+export const CLEAR_TEAM = 'CLEAR_TEAM';
