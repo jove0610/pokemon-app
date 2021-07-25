@@ -126,6 +126,7 @@ const Home = ({ disClearData: clearData, disSetData: setData }) => {
             py="1"
             align="center"
             backgroundColor="red.300"
+            color="black"
           >
             Pokemon Not Found
           </Text>
