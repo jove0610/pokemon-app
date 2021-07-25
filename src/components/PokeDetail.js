@@ -68,12 +68,7 @@ const PokeDetail = ({
     storage = storage.filter((url) => url !== forms[0].url);
     localStorage.setItem('pokeApp', JSON.stringify(storage));
 
-    if (
-      window.location.pathname === '/myteam' ||
-      window.location.pathname === '/pokemon-app/myteam'
-    ) {
-      window.location.reload();
-    }
+    window.location.reload();
   };
 
   return (
