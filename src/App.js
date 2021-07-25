@@ -1,12 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import store from './redux/store';
 
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Team from './components/Team';
+import NotFound from './components/NotFound';
 
 import { ADD_TO_TEAM } from './redux/actions/types';
 
@@ -24,8 +25,11 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <Navbar />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/myteam" component={Team} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/myteam" component={Team} />
+        <NotFound />
+      </Switch>
     </Router>
   </Provider>
 );

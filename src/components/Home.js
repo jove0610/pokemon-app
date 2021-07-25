@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Box } from '@chakra-ui/layout';
-import { Button, Input, Text, VStack } from '@chakra-ui/react';
+import { Button, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
 
 import {
   clearData as disClearData,
@@ -10,6 +10,8 @@ import {
 } from '../redux/actions/pokeData';
 
 import PokeDetail from './PokeDetail';
+
+import headerImage from '../media/header.png';
 
 const Home = ({ disClearData: clearData, disSetData: setData }) => {
   const [state, setState] = useState({
@@ -48,6 +50,33 @@ const Home = ({ disClearData: clearData, disSetData: setData }) => {
       setData(data);
       setState({
         ...state,
+        pokeInput: '',
+        displayFetchError: false,
+        displayPokeDetail: true,
+      });
+    }
+  };
+
+  const onClickSurprise = async () => {
+    // random num from 1 to 898
+    const num = Math.floor(Math.random() * 898) + 1;
+
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${num}`);
+
+    if (res.status === 404) {
+      setState({
+        ...state,
+        displayFetchError: true,
+        displayPokeDetail: false,
+      });
+      clearData();
+    }
+    if (res.status === 200) {
+      const data = await res.json();
+      setData(data);
+      setState({
+        ...state,
+        pokeInput: '',
         displayFetchError: false,
         displayPokeDetail: true,
       });
@@ -57,6 +86,13 @@ const Home = ({ disClearData: clearData, disSetData: setData }) => {
   return (
     <VStack spacing="50">
       <Box pt="10">
+        <Image
+          src={headerImage}
+          alt="logo"
+          width="20em"
+          height="7em"
+          mb="3em"
+        />
         <form onSubmit={onSubmit}>
           <VStack spacing="5">
             <Input
@@ -69,9 +105,18 @@ const Home = ({ disClearData: clearData, disSetData: setData }) => {
               onChange={onChange}
               isRequired
             />
-            <Button colorScheme="teal" type="submit">
-              Submit
-            </Button>
+            <HStack spacing="1.5em">
+              <Button colorScheme="teal" type="submit">
+                Search
+              </Button>
+              <Button
+                colorScheme="teal"
+                type="button"
+                onClick={onClickSurprise}
+              >
+                Surprise Me!
+              </Button>
+            </HStack>
           </VStack>
         </form>
         {displayFetchError && (
@@ -92,10 +137,6 @@ const Home = ({ disClearData: clearData, disSetData: setData }) => {
           <PokeDetail />
         </Box>
       )}
-
-      <Button onClick={() => localStorage.removeItem('pokeApp')}>
-        Clear Storage
-      </Button>
     </VStack>
   );
 };
