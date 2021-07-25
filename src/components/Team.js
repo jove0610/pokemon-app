@@ -14,6 +14,7 @@ import {
   Link,
   Spacer,
   useColorMode,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 import {
@@ -57,6 +58,7 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
   }, []);
 
   const { colorMode } = useColorMode();
+  const [isLargerThan500] = useMediaQuery('(min-width: 500px');
 
   const onClickViewBtn = async (e) => {
     const pokeName = e.target.name;
@@ -78,22 +80,27 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
 
   return (
     <VStack mt="3em">
-      <Accordion>
+      <Accordion allowToggle="true">
         {teamData.length !== 0 ? (
           <VStack spacing="1.5em" mb="3em">
             {teamData.map((pokemon) => (
               <AccordionItem key={pokemon.id} border="none">
                 <Flex
-                  w="30em"
                   align="center"
                   backgroundColor={
                     colorMode === 'light' ? 'teal.200' : 'teal.800'
                   }
                   borderRadius="2.5em"
                   px="2em"
+                  w={isLargerThan500 ? '30em' : '90vw'}
                 >
                   <Image src={pokemon.url} />
-                  <Text fontWeight="bold">{pokemon.name}</Text>
+                  <Text
+                    fontWeight="bold"
+                    display={isLargerThan500 ? 'block' : 'none'}
+                  >
+                    {pokemon.name}
+                  </Text>
                   <Spacer />
 
                   <AccordionButton

@@ -80,6 +80,8 @@ const PokeDetail = ({
       borderRadius="3em"
       spacing="1.5em"
       backgroundColor={colorMode === 'light' ? 'teal.200' : 'teal.800'}
+      w={isLargerThan500 ? '' : '90vw'}
+      m="auto"
     >
       <Text fontSize="2em" fontWeight="bold">
         {name}
