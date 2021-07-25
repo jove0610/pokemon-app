@@ -6,4 +6,4 @@ An app that fetches data on Pokemon API and displays its details to the users. U
 
 <br />
 
-[Click Here to view live preview](https://jove0610.github.io/pokemon-app/)
+[Click Here to view live preview](https://jove0610.github.io/pokemon-app/#)
