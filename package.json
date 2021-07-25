@@ -55,6 +55,5 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^3.2.3"
-  },
-  "homepage": "https://jove0610.github.io/"
+  }
 }
