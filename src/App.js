@@ -23,7 +23,7 @@ if (localStorage.pokeApp) {
 
 const App = () => (
   <Provider store={store}>
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
