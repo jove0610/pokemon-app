@@ -43,7 +43,8 @@ const PokeDetail = ({
 
   const onClickAddBtn = () => {
     if (myTeam.length < 6) {
-      addToTeam(forms[0].url);
+      const pokeData = { name, forms, types, height, weight, abilities };
+      addToTeam(pokeData, sprites.sprites.front_default);
 
       let storage = [];
 
@@ -51,13 +52,13 @@ const PokeDetail = ({
         storage = JSON.parse(localStorage.getItem('pokeApp'));
       }
 
-      storage.push(forms[0].url);
+      storage.push({ data: pokeData, sprite: sprites.sprites.front_default });
       localStorage.setItem('pokeApp', JSON.stringify(storage));
     }
   };
 
   const onClickDelBtn = () => {
-    removeFromTeam(forms[0].url);
+    removeFromTeam(name);
 
     let storage = [];
 
@@ -65,10 +66,16 @@ const PokeDetail = ({
       storage = JSON.parse(localStorage.getItem('pokeApp'));
     }
 
-    storage = storage.filter((url) => url !== forms[0].url);
+    storage = storage.filter((member) => member.data.name !== name);
     localStorage.setItem('pokeApp', JSON.stringify(storage));
 
-    window.location.reload();
+    // window.location.reload();
+  };
+
+  const isInTeam = () => {
+    const data = myTeam.filter((member) => member.data.name === name);
+    if (data.length === 1) return true;
+    return false;
   };
 
   return (
@@ -121,7 +128,7 @@ const PokeDetail = ({
         </VStack>
       </Flex>
 
-      {myTeam.includes(forms[0].url) ? (
+      {isInTeam() ? (
         <Button
           onClick={onClickDelBtn}
           color="black"

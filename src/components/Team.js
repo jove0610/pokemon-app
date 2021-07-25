@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link as ReachLink } from 'react-router-dom';
@@ -26,39 +26,20 @@ import PokeDetail from './PokeDetail';
 
 const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
   const [state, setState] = useState({
-    teamData: [],
     displayPokeDetail: false,
   });
+  const { colorMode } = useColorMode();
+  const [isLargerThan500] = useMediaQuery('(min-width: 500px');
 
-  const { teamData, displayPokeDetail } = state;
+  const { displayPokeDetail } = state;
 
   useEffect(() => {
-    const fetchSprites = async () => {
-      myTeam.forEach(async (url, index) => {
-        await fetch(url)
-          .then((res) => res.json())
-          .then((data) => {
-            teamData[index] = {
-              name: data.name,
-              url: data.sprites.front_default,
-              id: data.id,
-            };
-
-            setState({
-              ...state,
-            });
-          });
-      });
-    };
-    fetchSprites();
+    setState({ ...state, displayPokeDetail: false });
 
     return () => {
       clearData();
     };
-  }, []);
-
-  const { colorMode } = useColorMode();
-  const [isLargerThan500] = useMediaQuery('(min-width: 500px');
+  }, [myTeam]);
 
   const onClickViewBtn = async (e) => {
     const pokeName = e.target.name;
@@ -81,10 +62,10 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
   return (
     <VStack mt="3em">
       <Accordion allowToggle="true">
-        {teamData.length !== 0 ? (
+        {myTeam.length !== 0 ? (
           <VStack spacing="1.5em" mb="3em">
-            {teamData.map((pokemon) => (
-              <AccordionItem key={pokemon.id} border="none">
+            {myTeam.map((pokemon) => (
+              <AccordionItem key={pokemon.data.name} border="none">
                 <Flex
                   align="center"
                   backgroundColor={
@@ -94,12 +75,12 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
                   px="2em"
                   w={isLargerThan500 ? '30em' : '90vw'}
                 >
-                  <Image src={pokemon.url} />
+                  <Image src={pokemon.sprite} />
                   <Text
                     fontWeight="bold"
                     display={isLargerThan500 ? 'block' : 'none'}
                   >
-                    {pokemon.name}
+                    {pokemon.data.name}
                   </Text>
                   <Spacer />
 
@@ -108,7 +89,7 @@ const Team = ({ myTeam, disSetData: setData, disClearData: clearData }) => {
                     backgroundColor="yellow.200"
                     borderRadius="1em"
                     color="black"
-                    name={pokemon.name}
+                    name={pokemon.data.name}
                     fontWeight="bold"
                     onClick={onClickViewBtn}
                   >

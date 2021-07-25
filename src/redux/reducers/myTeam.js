@@ -7,7 +7,7 @@ const myTeam = (state = [], action) => {
     case ADD_TO_TEAM:
       return [...state, payload];
     case REMOVE_FROM_TEAM:
-      return state.filter((spriteURL) => spriteURL !== payload);
+      return state.filter((member) => member.data.name !== payload);
     default:
       return state;
   }
