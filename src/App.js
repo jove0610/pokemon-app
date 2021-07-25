@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import store from './redux/store';
 
@@ -23,7 +23,7 @@ if (localStorage.pokeApp) {
 
 const App = () => (
   <Provider store={store}>
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
